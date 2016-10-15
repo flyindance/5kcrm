@@ -30,9 +30,11 @@ class NavigationAction extends Action {
 			$user = M('User');
 			$navigation = M('Navigation');
 			$value = $user->where("user_id = %d", session('user_id'))->getField('navigation');
+
 			$menu = unserialize($value);
 						
 			$list = $navigation->select();
+
 			foreach($list AS $value) {
 				$navigationList[$value['id']] = $value;
 			}
@@ -51,7 +53,7 @@ class NavigationAction extends Action {
 			foreach($navigationList AS $value) {
 				$menu[$value['postion']][] = $value;
 			}
-			
+
 			$simple_menu = M('User')->where('user_id = %d', session('user_id'))->getField('simple_menu');
 			$this->simple_menu = unserialize($simple_menu);
 			$this->postion = $menu;
